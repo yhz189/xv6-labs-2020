@@ -9,6 +9,13 @@ struct sleeplock;
 struct stat;
 struct superblock;
 
+//kalloc.c
+uint64          free_mem(void);
+
+//proc.c
+uint64          nproc(void);
+
+
 // bio.c
 void            binit(void);
 struct buf*     bread(uint, uint);

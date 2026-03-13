@@ -23,6 +23,26 @@ struct {
   struct run *freelist;
 } kmem;
 
+//Return the number of bytes of free memery
+uint64
+free_mem(void)
+{
+  struct run *r;
+  uint64 num=0;
+  acquire(&kmem.lock);
+  r=kmem.freelist;
+  while(r)
+  {
+    num++;
+    r=r->next;
+
+  }
+  release(&kmem.lock);
+  return num *PGSIZE;
+
+}
+
+
 void
 kinit()
 {

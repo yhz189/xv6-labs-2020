@@ -303,6 +303,27 @@ fork(void)
   return pid;
 }
 
+//return the number of processes whose state is not UNUSED
+uint64
+nproc(void)
+{
+  struct proc *p;
+  uint64 num=0;
+  for(p=proc;p<&proc[NPROC];p++)
+  {
+    acquire(&p->lock);
+    if(p->state !=UNUSED)
+    {
+      num++;  
+    }
+    release(&p->lock);
+  }
+  return num;
+}
+
+
+
+
 // Pass p's abandoned children to init.
 // Caller must hold p->lock.
 void
